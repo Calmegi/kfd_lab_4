@@ -11,17 +11,12 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.parameters.P
 import org.springframework.web.bind.annotation.*
 
-/*
-Контроллер для операций обмена и просмотра истории транзакций.
-Доступен по адресу /api/transactions.
-*/
 
 @RestController
 @RequestMapping("/api/transactions")
 class TransactionsController(
     private val exchangeService: ExchangeService
 ) {
-    // Получение списка транзакций конкретного пользователя
     @GetMapping("/user/{username}")
     @PreAuthorize("authentication.name == #username || hasRole('ADMIN')")
     fun getUserTransactions(@PathVariable @P("username") username: String): ResponseEntity<List<Transaction>> {
@@ -29,7 +24,6 @@ class TransactionsController(
         return ResponseEntity.ok(transactions)
     }
 
-    // Проведение операции обмена валют
     @PostMapping("/exchange")
     @PreAuthorize("authentication.name == #exchangeRequest.username")
     fun exchangeCurrency(@Valid @RequestBody exchangeRequest: ExchangeRequest): ResponseEntity<Any> {
@@ -42,7 +36,7 @@ class TransactionsController(
     }
 }
 
-// Модель запроса для обмена валют. Сумма (amount) передаётся в минимальных единицах.
+
 data class ExchangeRequest(
     @field:NotBlank
     val username: String,
