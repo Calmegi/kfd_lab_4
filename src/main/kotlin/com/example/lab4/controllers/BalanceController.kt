@@ -10,11 +10,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
-/*
-Этот контроллер позволяет получать и изменять балансы пользователей.
-Обратите внимание, что метод для обновления баланса использует POST по адресу /api/balance/{username},
-а также явно указывает, что принимает JSON.
-*/
 
 @RestController
 @RequestMapping("/api/balance")
@@ -33,8 +28,6 @@ class BalanceController(
         return ResponseEntity.ok(user.balances)
     }
 
-    // Этот метод позволяет обновить/пополнить баланс пользователя.
-    // После вызова, например с URL /api/balance/bob, будет произведено изменение балансов для пользователя bob.
     @PostMapping(path = ["/{username}"], consumes = ["application/json"])
     @PreAuthorize("hasRole('ADMIN')")
     fun updateBalance(
@@ -43,7 +36,6 @@ class BalanceController(
     ): ResponseEntity<List<Balance>> {
         val user = userRepository.findByUsername(username) ?: return ResponseEntity.notFound().build()
 
-        // Для каждого запроса (например, добавление USD или EUR) обновляем баланс.
         for (balance in balances) {
             val userBalance = user.balances.firstOrNull { it.currencyCode == balance.currencyCode.uppercase() }
             if (userBalance == null) {
