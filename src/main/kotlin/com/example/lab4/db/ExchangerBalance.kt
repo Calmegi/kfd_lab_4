@@ -2,11 +2,6 @@ package com.example.lab4.db
 
 import jakarta.persistence.*
 
-/*
-Сущность ExchangerBalance представляет баланс самого терминала обмена.
-Каждая запись содержит валюту (уникально) и количество доступных единиц.
-*/
-
 @Entity
 data class ExchangerBalance(
     @Column(nullable = false, unique = true)
