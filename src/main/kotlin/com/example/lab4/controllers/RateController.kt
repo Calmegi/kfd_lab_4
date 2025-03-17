@@ -1,7 +1,6 @@
 package com.example.lab4.controllers
 
 import com.example.lab4.db.CurrencyPair
-//import com.example.lab4.db.repositories.CurrencyPairRepository
 import com.example.lab4.repositories.CurrencyPairRepository
 import com.example.lab4.services.RateUpdater
 import jakarta.validation.Valid
@@ -13,9 +12,6 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import java.net.URI
 
-/*
-Контроллер для работы с валютными парами по адресу /api/rates.
-*/
 
 @RestController
 @RequestMapping("/api/rates")
@@ -23,13 +19,13 @@ class RateController(
     private val currencyPairRepository: CurrencyPairRepository,
     private val rateUpdater: RateUpdater
 ) {
-    // Получение списка всех валютных пар
+
     @GetMapping
     fun getRates(): ResponseEntity<List<CurrencyPair>> {
         return ResponseEntity.ok(currencyPairRepository.findAll())
     }
 
-    // Добавление новой валютной пары (только для администратора)
+
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     fun addRate(@Valid @RequestBody rateRequest: RateRequest): ResponseEntity<Any> {
@@ -49,7 +45,7 @@ class RateController(
         return ResponseEntity.created(URI("/api/rates/${saved.id}")).body(saved)
     }
 
-    // Обновление курсов (администратор)
+
     @PostMapping("/update")
     @PreAuthorize("hasRole('ADMIN')")
     fun updateRates(): ResponseEntity<List<CurrencyPair>> {
@@ -57,7 +53,6 @@ class RateController(
         return ResponseEntity.ok(updatedRates)
     }
 
-    // Удаление валютной пары (администратор)
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     fun deleteRate(@PathVariable id: Long): ResponseEntity<Void> {
@@ -66,7 +61,6 @@ class RateController(
     }
 }
 
-// Модель запроса для добавления валютной пары.
 data class RateRequest(
     @field:NotBlank(message = "Base currency cannot be blank")
     val baseCurrency: String,
