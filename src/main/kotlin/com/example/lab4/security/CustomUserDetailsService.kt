@@ -9,10 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
-/*
-Сервис для загрузки деталей пользователя, используемый Spring Security.
-Он ищет пользователя по имени и возвращает объект UserDetails.
-*/
 
 @Service
 class CustomUserDetailsService(private val userRepository: UserRepository) : UserDetailsService {
