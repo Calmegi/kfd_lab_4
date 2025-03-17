@@ -6,11 +6,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
-/*
-Сущность Transaction хранит данные о проведённом обмене валют.
-Сюда записываются: пользователь, строковое представление валютной пары, курс на момент обмена,
-изменения балансов (отрицательное значение — списание, положительное — зачисление) и временная метка.
-*/
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "id")
