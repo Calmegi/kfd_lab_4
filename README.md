@@ -1,5 +1,8 @@
-# kfd lab 4
+# kfd_lab4
 
-# Мельникова Маргарита
+<b> REST API для валютного обменника <b>
 
-Отчёт в .pdf и .docx находятся в репозитории
+  отчёт: https://drive.google.com/drive/folders/1o-qE-O7Q178tqV3a0A5Sfd8aoOAxbICI?usp=sharing
+
+KFD 2024/2025   
+Мельникова Маргарита
