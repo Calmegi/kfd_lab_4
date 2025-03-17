@@ -5,12 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import jakarta.persistence.*
 
-/*
-Сущность ExchangerUser представляет пользователя системы обмена валют.
-Содержит уникальное имя, зашифрованный пароль, список ролей (authorities),
-а также связи с балансами и историей транзакций.
-*/
-
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator::class, property = "username")
 data class ExchangerUser(
