@@ -9,10 +9,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
-/*
-JWT-фильтр проверяет каждый HTTP‑запрос на наличие корректного JWT в заголовке Authorization.
-Если токен валиден – устанавливаются детали аутентификации в SecurityContext.
-*/
 
 @Component
 class JwtAuthenticationFilter(
