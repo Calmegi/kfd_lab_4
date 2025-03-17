@@ -1,7 +1,6 @@
 package com.example.lab4.controllers
 
 import com.example.lab4.db.ExchangerUser
-//import com.example.lab4.db.repositories.UserRepository
 import com.example.lab4.repositories.UserRepository
 import jakarta.validation.constraints.NotBlank
 import org.springframework.http.ResponseEntity
@@ -9,24 +8,18 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.parameters.P
 import org.springframework.web.bind.annotation.*
 
-/*
-Контроллер для управления пользователями по адресу /api/users.
-Доступ к операциям обеспечивается только для администратора или текущего пользователя.
-*/
 
 @RestController
 @RequestMapping("/api/users")
 class UsersController(
     private val userRepository: UserRepository
 ) {
-    // Получение списка всех пользователей (администратор)
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     fun getUsers(): ResponseEntity<List<ExchangerUser>> {
         return ResponseEntity.ok(userRepository.findAll())
     }
 
-    // Получение данных о конкретном пользователе
     @PreAuthorize("authentication.name == #username || hasRole('ADMIN')")
     @GetMapping("/{username}")
     fun getUser(@PathVariable @P("username") username: String): ResponseEntity<ExchangerUser> {
@@ -34,7 +27,6 @@ class UsersController(
         return ResponseEntity.ok(user)
     }
 
-    // Удаление пользователя (может удалить сам пользователь или администратор)
     @PreAuthorize("authentication.name == #username || hasRole('ADMIN')")
     @DeleteMapping("/{username}")
     fun deleteUser(@PathVariable @P("username") username: String): ResponseEntity<Void> {
