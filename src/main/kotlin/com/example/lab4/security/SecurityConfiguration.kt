@@ -28,16 +28,11 @@ class SecurityConfiguration(
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        // Отключаем CSRF (для упрощения тестирования; для production‑решений CSRF следует настраивать отдельно)
         http.csrf { it.disable() }
 
         http.authorizeHttpRequests { auth ->
-            // Доступ к эндпоинтам аутентификации без токена
             auth.requestMatchers("/api/auth/**").permitAll()
 
-            // Административные операции только через POST:
-            // – Обновление балансов (пополнение баланса пользователя или терминала)
-            // – Добавление валютных пар и обновление курсов
             auth.requestMatchers(
                 HttpMethod.POST,
                 "/api/balance/**",
@@ -45,11 +40,9 @@ class SecurityConfiguration(
                 "/api/rates/**"
             ).hasRole("ADMIN")
 
-            // Остальные запросы доступны любым аутентифицированным пользователям.
             auth.anyRequest().authenticated()
         }
 
-        // Добавляем фильтр для обработки JWT перед стандартным фильтром аутентификации
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
